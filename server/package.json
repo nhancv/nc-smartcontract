@@ -34,10 +34,10 @@
     "web3": "^1.0.0-beta.33"
   },
   "devDependencies": {
-    "@types/react": "^16.0.40",
-    "@types/react-dom": "^16.0.4",
     "@types/jest": "^22.1.3",
     "@types/node": "^9.4.6",
+    "@types/react": "^16.0.40",
+    "@types/react-dom": "^16.0.4",
     "jest": "^22.4.2",
     "nodemon": "^1.17.1",
     "ts-jest": "^22.4.0",
