@@ -17,6 +17,11 @@ contract Voting {
   event AddCandidateEvent(address indexed from, uint8 candidateId);
   event VoteCandidateEvent(address indexed from, uint8 candidateId);
 
+  // @nhancv: Get length of Candidate list
+  function getNumberCandidate() public view returns (uint8) {
+    return uint8(candidateList.length);
+  }
+
   // @nhancv: Addition candidate
   function addCandidate(string name) public {
     Candidate memory candidate = Candidate(uint8(candidateList.length), name, new address[](0));

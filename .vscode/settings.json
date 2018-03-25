@@ -11,8 +11,20 @@
     }
   },
   "typescript.tsdk": "./node_modules/typescript/lib",
-  "typescript.referencesCodeLens.enabled": true,
-  "typescript.implementationsCodeLens.enabled": true,
+  "typescript.referencesCodeLens.enabled": false,
+  "typescript.implementationsCodeLens.enabled": false,
   "prettier.semi": false,
-  "prettier.singleQuote": true
+  "prettier.singleQuote": true,
+  "solidity.enabledAsYouTypeCompilationErrorCheck": true,
+  "solidity.validationDelay": 1500,
+  "solidity.linter": "solhint",
+  "solidity.solhintRules": {
+    "avoid-throw": false,
+    "avoid-suicide": "error",
+    "avoid-sha3": "warn",
+    "indent": ["warn", 2],
+    "two-lines-top-level-separator": false,
+    "no-unused-vars": false,
+    "var-name-mixedcase": false
+  }
 }
