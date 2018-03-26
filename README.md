@@ -37,5 +37,9 @@ cd frontend
 npm run build
 ```
 ---------------------
-
-Prepare new eth wallet in Ropsten Test Net with Metamask [https://metamask.io/]
+## Demo
+```
+cd server
+npm start
+```
+Go to: http://localhost:4000/

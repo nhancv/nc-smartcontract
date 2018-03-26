@@ -78,7 +78,7 @@ class App extends React.Component<AppProps, AppState> {
     this.contract.addCandidateContract(candidate).then(hashObject => {
       this.setState({
         msgLog: `addCandidate success: 
-        <a href="https://ropsten.etherscan.io/tx/${hashObject}" className="alert-link">
+        <a href="https://ropsten.etherscan.io/tx/${hashObject.transactionHash}" className="alert-link">
         View Detail</a><br/>
         TransactionHash: ${hashObject.transactionHash}<br/>
         BlockHash: ${hashObject.blockNumber}<br/>

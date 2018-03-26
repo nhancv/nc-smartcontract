@@ -21,7 +21,6 @@ export default class VotingContract {
   constructor() {
     this.initContract()
     this.viewBalance()
-    // this.addCandidateContract()
     this.addCandidateEventContract()
     this.voteCandidateEventContract()
     this.getCandidateListContract().then(list => {
