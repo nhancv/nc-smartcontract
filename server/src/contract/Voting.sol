@@ -7,7 +7,7 @@ contract Voting {
   struct Candidate {
     uint8 id;
     string name;
-    address[] voter;
+    uint8 point;
   }
 
   // @nhancv: Candidate list
@@ -24,29 +24,29 @@ contract Voting {
 
   // @nhancv: Addition candidate
   function addCandidate(string name) public {
-    Candidate memory candidate = Candidate(uint8(candidateList.length), name, new address[](0));
+    Candidate memory candidate = Candidate(uint8(candidateList.length + 1), name, 0);
     candidateList.push(candidate);
     emit AddCandidateEvent(msg.sender, candidate.id);
   }
 
-  // @nhancv: Get total vote for candidate
-  function getCandidate(uint8 candidateId) public view returns (address[] voter) {
+  // @nhancv: Get winner
+  function getWinner() public view returns (uint8 candidateId) {
+    Candidate memory candidate;
     for (uint i = 0; i < candidateList.length; i++) {
-      if (candidateList[i].id == candidateId) {
-        return candidateList[i].voter;
+      if (candidate.point < candidateList[i].point) {
+        candidate = candidateList[i];
       }
     }
-    return new address[](0);
+    return candidate.id;
   }
 
   // @nhancv: Vote for candidate
   function voteCandidate(uint8 candidateId) public payable returns (uint8) {
     for (uint i = 0; i < candidateList.length; i++) {
       if (candidateList[i].id == candidateId) {
-        address[] storage voterArr = candidateList[i].voter;
-        voterArr.push(msg.sender);
+        candidateList[i].point++;
         emit VoteCandidateEvent(msg.sender, candidateId);
-        return uint8(voterArr.length);
+        return candidateList[i].point;
       }
     }
     return 0;

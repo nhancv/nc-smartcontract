@@ -35,7 +35,7 @@ export default class VotingContract {
     })
   }
 
-  initContract(contractAddress = '0xF5e61E94627dA3fAa63aaE3B946321C13Ab1103e') {
+  initContract(contractAddress = '0xa2db71249c0548b8a1a82b2233d9254d9944fb63') {
     this.contractAddress = contractAddress
     this.contract = new web3.eth.Contract(JSON.parse(votingSol.abi), this.contractAddress)
   }
