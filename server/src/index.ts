@@ -1,4 +1,4 @@
-import VotingSmartContract from './voting_smart_contract'
+import VotingContract from './contract/VotingContract'
 
 const express = require('express')
 const cors = require('cors')
@@ -24,6 +24,5 @@ app.listen(port, function() {
   log('Server listening at port %d', port)
 })
 
-// var smart_contract_test = require('./smartcontract_test')
-var votingSmartContract: VotingSmartContract = new VotingSmartContract()
-// votingSmartContract.createSmartContract()
+var votingSmartContract: VotingContract = new VotingContract()
+

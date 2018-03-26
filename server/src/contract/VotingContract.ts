@@ -1,19 +1,15 @@
 const Web3 = require('web3')
-const util = require('ethereumjs-util')
-const tx = require('ethereumjs-tx')
-const lightwallet = require('eth-lightwallet')
-const txutils = lightwallet.txutils
 //https://web3js.readthedocs.io/en/1.0/#
 const web3 = new Web3(new Web3.providers.HttpProvider('https://ropsten.infura.io/bX04wRIDomo1TFL3ELaS'))
 
-const configKey = require('./config.key.json')
+const configKey = require('../config/config.key.json')
 const walletAddress = configKey['walletAddress']
 const walletPrivateKey = `0x${configKey['walletPrivateKey']}`
-const votingSol = require('./contract/Voting.json')
+const votingSol = require('./Voting.json')
 const account = web3.eth.accounts.wallet.add(walletPrivateKey)
 const gas = 800000
 const gasPrice = web3.utils.toWei('0.0000000002', 'ether')
-export default class VotingSmartContract {
+export default class VotingContract {
   contractAddress
   contract
   constructor() {
