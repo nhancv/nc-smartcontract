@@ -4,7 +4,7 @@ const votingSol = require('./Voting.json')
 export default class VotingContract extends Contract {
   constructor() {
     super()
-    this.initContract('0xa2db71249c0548b8a1a82b2233d9254d9944fb63', JSON.parse(votingSol.abi))
+    this.initContract('0x2f73e313a7e55ac3fd406772e448fa2f56c458ca', JSON.parse(votingSol.abi))
     this.viewBalance().then(balance => {
       console.log(`Balance ${this.walletAddress}: `, this.web3.utils.fromWei(balance, 'ether'))
     })

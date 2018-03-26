@@ -22,7 +22,7 @@ export default class VotingContract {
     return this.web3.eth.getBalance(this.account)
   }
 
-  initContract(contractAddress: string = '0xa2db71249c0548b8a1a82b2233d9254d9944fb63') {
+  initContract(contractAddress: string = '0x2f73e313a7e55ac3fd406772e448fa2f56c458ca') {
     this.contractAddress = contractAddress
     this.contract = new this.web3.eth.Contract(JSON.parse(votingSol.abi), this.contractAddress)
   }
