@@ -1,6 +1,12 @@
 const Web3 = require('web3')
-//https://web3js.readthedocs.io/en/1.0/#
-const web3 = new Web3(new Web3.providers.HttpProvider('https://ropsten.infura.io/bX04wRIDomo1TFL3ELaS'))
+
+/**
+ * https://web3js.readthedocs.io/en/1.0/#
+wss://mainnet.infura.io/ws
+wss://ropsten.infura.io/ws
+wss://rinkeby.infura.io/ws
+ */
+const web3 = new Web3(new Web3.providers.WebsocketProvider('wss://ropsten.infura.io/ws'))
 
 const configKey = require('../config/config.key.json')
 const walletAddress = configKey['walletAddress']
@@ -16,6 +22,8 @@ export default class VotingContract {
     this.initContract()
     this.viewBalance()
     // this.addCandidateContract()
+    this.addCandidateEventContract()
+    this.voteCandidateEventContract()
     this.getCandidateListContract().then(list => {
       console.log(list)
     })
@@ -23,7 +31,7 @@ export default class VotingContract {
 
   viewBalance() {
     web3.eth.getBalance(walletAddress).then(balance => {
-      console.log(`Balance ${walletAddress}: `, web3.utils.fromWei(balance))
+      console.log(`Balance ${walletAddress}: `, web3.utils.fromWei(balance, 'ether'))
     })
   }
 
@@ -71,21 +79,20 @@ export default class VotingContract {
 
   getCandidateListContract() {
     return new Promise((resolve, reject) => {
-      var candidateList: any = []
       this.contract.methods.getNumberCandidate().call((err, res) => {
         console.log('Candidate List: ', res)
 
         let requestList: any = []
         for (let i = 0; i < res; i++) {
           requestList.push(
-            new Promise((resolve, reject) => {
-              this.contract.methods.candidateList(i).call((err, res) => {
-                if (err) {
-                  reject(err)
+            new Promise((resolve1, reject1) => {
+              this.contract.methods.candidateList(i).call((err1, res1) => {
+                if (err1) {
+                  reject1(err1)
                 } else {
-                  resolve({
-                    id: res.id,
-                    name: res.name
+                  resolve1({
+                    id: res1.id,
+                    name: res1.name
                   })
                 }
               })
@@ -137,5 +144,36 @@ export default class VotingContract {
           })
       })
     })
+  }
+
+  ///////////////////// EVENT ///////////////////////
+  voteCandidateEventContract() {
+    this.contract.events
+      .VoteCandidateEvent()
+      .on('data', event => {
+        console.log(event) // same results as the optional callback above
+      })
+      .on('changed', event => {
+        // remove event from local database
+      })
+      .on('error', console.error)
+  }
+
+  addCandidateEventContract() {
+    this.contract.events
+      .AddCandidateEvent({ fromBlock: 0 }, (err, res) => {
+        if (err) {
+          console.error(err)
+        } else {
+          console.log(res)
+        }
+      })
+      .on('data', event => {
+        console.log(event) // same results as the optional callback above
+      })
+      .on('changed', event => {
+        // remove event from local database
+      })
+      .on('error', console.error)
   }
 }
