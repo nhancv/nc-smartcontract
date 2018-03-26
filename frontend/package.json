@@ -2,7 +2,7 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
-  "homepage": "/home",
+  "homepage": "https://nhancv.github.io/nc-smartcontract/home",
   "dependencies": {
     "bootstrap": "^4.0.0",
     "node-sass-chokidar": "0.0.3",
