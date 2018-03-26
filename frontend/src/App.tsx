@@ -33,31 +33,27 @@ class App extends React.Component<AppProps, AppState> {
   }
 
   componentWillMount() {
-    this.initWeb3(res => {
-      if (res) {
-        this.contract = new VotingContract(this.web3, this.account)
-        this.getCurrentBalance()
-        this.getVotingCandidateList()
-      }
-      this.setState({ providerValid: res })
+    this.initWeb3(() => {
+      this.contract = new VotingContract(this.web3, this.account)
+      this.setState({ providerValid: true })
+
+      this.getCurrentBalance()
+      this.getVotingCandidateList()
+    
     })
   }
 
-  initWeb3 = (cb: any) => {
+  initWeb3 = (doneCb: any) => {
     if (Web3.givenProvider) {
       this.web3 = new Web3(Web3.givenProvider)
 
       this.web3.eth.getAccounts((error, accounts) => {
-        if (error || accounts.length === 0) {
-          cb(false)
-        } else {
+        if (!error && accounts.length !== 0) {
           this.account = accounts[0]
           this.web3.eth.defaultAccount = this.account
-          cb(true)
+          doneCb()
         }
       })
-    } else {
-      cb(false)
     }
   }
 
