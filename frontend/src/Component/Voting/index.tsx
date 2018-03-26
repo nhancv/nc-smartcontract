@@ -95,8 +95,7 @@ class Main extends React.Component<MainProps, MainState> {
               <Card key={candidate.id} className="Vote-Card">
                 <CardBody>
                   <CardTitle>{candidate.name}</CardTitle>
-                  <h6>Id: {candidate.id}</h6>
-                  <h6>Point: {candidate.point}</h6>
+                  <h6>Id: {candidate.id} - Point: {candidate.point}</h6>
                   <Button
                     color="info"
                     onClick={() => {

@@ -79,11 +79,39 @@ export default class VotingContract {
     })
   }
 
-  addCandidateContract(candiate: string) {
-    return this.contract.methods.addCandidate(candiate).send({ from: this.account })
+  addCandidateContract(candiate: string, transactionHash?: Function) {
+    return this.contract.methods
+      .addCandidate(candiate)
+      .send({ from: this.account })
+      .on('transactionHash', hash => {
+        if (transactionHash) transactionHash(hash)
+      })
+      .on('confirmation', (confirmationNumber, receipt) => {
+        console.log('=> confirmation: ' + confirmationNumber)
+      })
+      .on('receipt', receipt => {
+        console.log('=> reciept', receipt)
+      })
+      .on('error', error => {
+        console.error('Error: ', error)
+      })
   }
 
-  voteCandidateContract(candiateId: number) {
-    return this.contract.methods.voteCandidate(candiateId).send({ from: this.account })
+  voteCandidateContract(candiateId: number, transactionHash?: Function) {
+    return this.contract.methods
+      .voteCandidate(candiateId)
+      .send({ from: this.account })
+      .on('transactionHash', hash => {
+        if (transactionHash) transactionHash(hash)
+      })
+      .on('confirmation', (confirmationNumber, receipt) => {
+        console.log('=> confirmation: ' + confirmationNumber)
+      })
+      .on('receipt', receipt => {
+        console.log('=> reciept', receipt)
+      })
+      .on('error', error => {
+        console.error('Error: ', error)
+      })
   }
 }

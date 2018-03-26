@@ -10,14 +10,8 @@ var port = process.env.PORT || 4000
 // CORS on ExpressJS: https://github.com/expressjs/cors
 app.use(cors())
 
-// For fontend route
-var frontendDir = path.join(path.dirname(path.dirname(__dirname)), 'frontend')
-app.use('/home', express.static(path.join(frontendDir, 'build')))
-app.get('/home', function(req, res) {
-  res.sendFile(path.join(frontendDir, 'build', 'index.html'))
-})
 app.get('/', function(req, res) {
-  res.redirect('/home')
+  res.redirect('https://nhancv.github.io/nc-smartcontract/home/index.html')
 })
 
 app.listen(port, function() {

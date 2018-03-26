@@ -34,12 +34,12 @@ class App extends React.Component<AppProps, AppState> {
 
   componentWillMount() {
     this.initWeb3(res => {
-      this.contract = new VotingContract(this.web3, this.account)
+      if (res) {
+        this.contract = new VotingContract(this.web3, this.account)
+        this.getCurrentBalance()
+        this.getVotingCandidateList()
+      }
       this.setState({ providerValid: res })
-
-      this.getCurrentBalance()
-      this.getVotingCandidateList()
-
     })
   }
 
@@ -75,10 +75,16 @@ class App extends React.Component<AppProps, AppState> {
     this.setState({
       msgLog: `addCandidate is sending, please wait for confirmation`
     })
-    this.contract.addCandidateContract(candidate).then(hashObject => {
+    this.contract.addCandidateContract(candidate, transactionHash => {
+      this.setState({
+        msgLog: `addCandidate is sending with txhash: 
+        <a href="https://ropsten.etherscan.io/tx/${transactionHash}" target="_blank" className="alert-link">
+        ${transactionHash}</a>`
+      })
+    }).then(hashObject => {
       this.setState({
         msgLog: `addCandidate success: 
-        <a href="https://ropsten.etherscan.io/tx/${hashObject.transactionHash}" className="alert-link">
+        <a href="https://ropsten.etherscan.io/tx/${hashObject.transactionHash}" target="_blank" className="alert-link">
         View Detail</a><br/>
         TransactionHash: ${hashObject.transactionHash}<br/>
         BlockHash: ${hashObject.blockNumber}<br/>
@@ -101,11 +107,16 @@ class App extends React.Component<AppProps, AppState> {
     this.setState({
       msgLog: `voteCandidate is sending, please wait for confirmation`
     })
-    this.contract.voteCandidateContract(candidateId).then(hashObject => {
-      console.log(hashObject)
+    this.contract.voteCandidateContract(candidateId, transactionHash => {
+      this.setState({
+        msgLog: `voteCandidate is sending with txhash: 
+        <a href="https://ropsten.etherscan.io/tx/${transactionHash}" target="_blank" className="alert-link">
+        ${transactionHash}</a>`
+      })
+    }).then(hashObject => {
       this.setState({
         msgLog: `voteCandidate success: 
-        <a href="https://ropsten.etherscan.io/tx/${hashObject.transactionHash}" className="alert-link">
+        <a href="https://ropsten.etherscan.io/tx/${hashObject.transactionHash}" target="_blank" className="alert-link">
         View Detail</a><br/>
         TransactionHash: ${hashObject.transactionHash}<br/>
         BlockHash: ${hashObject.blockNumber}<br/>
@@ -142,7 +153,7 @@ class App extends React.Component<AppProps, AppState> {
       this.setState({
         candicateList: list
       })
-      this.getWinner(list)
+      this.getWinner(list)  
     })
   }
   
@@ -168,7 +179,8 @@ class App extends React.Component<AppProps, AppState> {
     } else {
       return (
         <div className="App-invalidProvider">
-          <h1>Install Metamask Please</h1>
+          <br />
+          <h1>Install Metamask and Unlock your account. Please.</h1>
           <a href="https://metamask.io/">https://metamask.io/</a>
         </div>
       )
