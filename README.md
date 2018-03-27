@@ -1,15 +1,29 @@
 # SmartContract demo
 
+### Voting application 
+Youtube: http://www.youtube.com/watch?v=jC21v033dwY
+
+Medium: https://medium.com/p/185e16dbfa35
+
+### ERC20 token
+Issue your ERC20 token with Solidity on Ethereum Blockchain [https://medium.com/p/6e640eb613ff]
+
+### ICO Crowdsale
+SmartContract ICO Crowdsale simple [https://medium.com/p/35dc5ff02459]
+
+
+--------
+
 ## Tech stack
 ### Server
 - Nodedemon
 - Typescript
 - ExpressJs
-
+- Web3
 ### Frontend
 - React
 - Typescript
-
+- Web3
 
 ## Dev
 ### Server
@@ -41,7 +55,7 @@ npm run build
 ```
 cd server
 npm start
-```
-Go to: http://localhost:4000/
 
-Demo: http://www.youtube.com/watch?v=jC21v033dwY
+Go to: http://localhost:4000/
+```
+
