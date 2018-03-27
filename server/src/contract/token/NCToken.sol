@@ -2,7 +2,9 @@ pragma solidity 0.4.21;
 
 /**
 Nhancv token contract
-https://ropsten.etherscan.io/address/0x9291b8194962bdaff76521358274900ae0d0f2ae#code
+
+Contract address: https://ropsten.etherscan.io/address/0x9291b8194962bdaff76521358274900ae0d0f2ae#code
+Token address   : https://ropsten.etherscan.io/token/0x9291b8194962bdaff76521358274900ae0d0f2ae
 Deployed at     : 0x9291b8194962bdaff76521358274900ae0d0f2ae
 Symbol          : NC
 Name            : Nhan Cao Token
