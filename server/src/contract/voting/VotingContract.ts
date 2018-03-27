@@ -1,4 +1,4 @@
-import Contract from './Contract'
+import Contract from '../Contract'
 
 const votingSol = require('./Voting.json')
 export default class VotingContract extends Contract {

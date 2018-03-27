@@ -1,4 +1,4 @@
-import VotingContract from './contract/VotingContract'
+import VotingContract from './contract/voting/VotingContract'
 
 const express = require('express')
 const cors = require('cors')
