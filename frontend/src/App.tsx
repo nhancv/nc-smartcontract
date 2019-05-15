@@ -39,21 +39,27 @@ class App extends React.Component<AppProps, AppState> {
 
       this.getCurrentBalance()
       this.getVotingCandidateList()
-    
     })
   }
 
-  initWeb3 = (doneCb: any) => {
+  initWeb3 = async (doneCb: any) => {
     if (Web3.givenProvider) {
       this.web3 = new Web3(Web3.givenProvider)
-
-      this.web3.eth.getAccounts((error, accounts) => {
-        if (!error && accounts.length !== 0) {
-          this.account = accounts[0]
-          this.web3.eth.defaultAccount = this.account
-          doneCb()
-        }
-      })
+      try {
+        // Request account access if needed
+        await Web3.givenProvider.enable()
+        this.web3.eth.getAccounts((error, accounts) => {
+          if (!error && accounts.length !== 0) {
+            this.account = accounts[0]
+            this.web3.eth.defaultAccount = this.account
+            doneCb()
+          } else {
+            console.error(error)
+          }
+        })
+      } catch (error) {
+        console.error(error)
+      }
     }
   }
 
@@ -71,15 +77,18 @@ class App extends React.Component<AppProps, AppState> {
     this.setState({
       msgLog: `addCandidate is sending, please wait for confirmation`
     })
-    this.contract.addCandidateContract(candidate, transactionHash => {
-      this.setState({
-        msgLog: `addCandidate is sending with txhash: 
+    this.contract
+      .addCandidateContract(candidate, transactionHash => {
+        this.setState({
+          msgLog: `addCandidate is sending with txhash: 
         <a href="https://ropsten.etherscan.io/tx/${transactionHash}" target="_blank" className="alert-link">
         ${transactionHash}</a>`
+        })
       })
-    }).then(hashObject => {
-      this.setState({
-        msgLog: `addCandidate success: 
+      .then(
+        hashObject => {
+          this.setState({
+            msgLog: `addCandidate success: 
         <a href="https://ropsten.etherscan.io/tx/${hashObject.transactionHash}" target="_blank" className="alert-link">
         View Detail</a><br/>
         TransactionHash: ${hashObject.transactionHash}<br/>
@@ -89,13 +98,15 @@ class App extends React.Component<AppProps, AppState> {
         From: ${hashObject.from}<br/>
         To: ${hashObject.to}<br/>
         `
-      })
-      this.getVotingCandidateList()
-    }, error => {
-      this.setState({
-        msgLog: ''
-      })
-    })  
+          })
+          this.getVotingCandidateList()
+        },
+        error => {
+          this.setState({
+            msgLog: ''
+          })
+        }
+      )
   }
 
   voteCandidate = (candidateId: number) => {
@@ -103,15 +114,18 @@ class App extends React.Component<AppProps, AppState> {
     this.setState({
       msgLog: `voteCandidate is sending, please wait for confirmation`
     })
-    this.contract.voteCandidateContract(candidateId, transactionHash => {
-      this.setState({
-        msgLog: `voteCandidate is sending with txhash: 
+    this.contract
+      .voteCandidateContract(candidateId, transactionHash => {
+        this.setState({
+          msgLog: `voteCandidate is sending with txhash: 
         <a href="https://ropsten.etherscan.io/tx/${transactionHash}" target="_blank" className="alert-link">
         ${transactionHash}</a>`
+        })
       })
-    }).then(hashObject => {
-      this.setState({
-        msgLog: `voteCandidate success: 
+      .then(
+        hashObject => {
+          this.setState({
+            msgLog: `voteCandidate success: 
         <a href="https://ropsten.etherscan.io/tx/${hashObject.transactionHash}" target="_blank" className="alert-link">
         View Detail</a><br/>
         TransactionHash: ${hashObject.transactionHash}<br/>
@@ -121,13 +135,15 @@ class App extends React.Component<AppProps, AppState> {
         From: ${hashObject.from}<br/>
         To: ${hashObject.to}<br/>
         `
-      })
-      this.getVotingCandidateList()
-    }, error => {
-      this.setState({
-        msgLog: ''
-      })
-    })  
+          })
+          this.getVotingCandidateList()
+        },
+        error => {
+          this.setState({
+            msgLog: ''
+          })
+        }
+      )
   }
 
   getWinner = (list: Array<Candidate>) => {
@@ -149,10 +165,10 @@ class App extends React.Component<AppProps, AppState> {
       this.setState({
         candicateList: list
       })
-      this.getWinner(list)  
+      this.getWinner(list)
     })
   }
-  
+
   constractReady = (): boolean => {
     if (this.state && this.state.providerValid && this.contract) {
       return true
@@ -163,11 +179,11 @@ class App extends React.Component<AppProps, AppState> {
   renderContainer = () => {
     if (this.constractReady()) {
       return (
-        <VotingView 
+        <VotingView
           msgLog={this.state.msgLog}
           currentBalance={this.state.currentBalance}
-          candidateList={this.state.candicateList} 
-          winner={this.state.winner} 
+          candidateList={this.state.candicateList}
+          winner={this.state.winner}
           addCandidateFunc={this.addCandidate}
           voteCandidateFunc={this.voteCandidate}
         />
@@ -181,7 +197,6 @@ class App extends React.Component<AppProps, AppState> {
         </div>
       )
     }
-    
   }
   render() {
     return (
