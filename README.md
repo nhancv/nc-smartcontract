@@ -53,9 +53,9 @@ npm run build
 ---------------------
 ## Demo
 ```
-cd server
+cd frontend
 npm start
 
-Go to: http://localhost:4000/
+Go to: http://localhost:3000/
 ```
 

@@ -43,11 +43,17 @@ class App extends React.Component<AppProps, AppState> {
   }
 
   initWeb3 = async (doneCb: any) => {
-    if (Web3.givenProvider) {
-      this.web3 = new Web3(Web3.givenProvider)
+    if (typeof window !== 'undefined' && typeof window['web3'] !== 'undefined') {
+      // We are in the browser and metamask is running.
+      this.web3 = new Web3(window['web3'].currentProvider)
+    } else {
+      // We are on the server *OR* the user is not running metamask
+      const provider = new Web3.providers.HttpProvider('Infura API key')
+      this.web3 = new Web3(provider)
+    }
+    if (this.web3) {
+      // this.web3 = new Web3(Web3.givenProvider)
       try {
-        // Request account access if needed
-        await Web3.givenProvider.enable()
         this.web3.eth.getAccounts((error, accounts) => {
           if (!error && accounts.length !== 0) {
             this.account = accounts[0]
