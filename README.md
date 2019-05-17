@@ -1,6 +1,6 @@
-# DEPRECATED - 
+# DEPRECATED
 
-Prefer to https://github.com/beesightsoft/bss-blockchain-netday
+### Prefer to https://github.com/beesightsoft/bss-blockchain-netday
 
 # SmartContract demo
 
