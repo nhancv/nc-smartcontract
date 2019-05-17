@@ -1,3 +1,7 @@
+# DEPRECATED - 
+
+Prefer to https://github.com/beesightsoft/bss-blockchain-netday
+
 # SmartContract demo
 
 ### Voting application 
